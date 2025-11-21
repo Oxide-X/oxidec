@@ -40,8 +40,8 @@
 # debug information files
 *.dwo
 
-# Build Directory
+# Build and Cache Directory
 build/
-
+.cache/
 
 temp/

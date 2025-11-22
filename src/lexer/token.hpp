@@ -1,6 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <cassert>
 #include <string>
 #include <unordered_map>
 
@@ -8,6 +9,8 @@ enum class TokenType {
   // Literals
   IntegerLiteral,
   FloatLiteral,
+  BinaryLiteral,
+  HexLiteral,
   StringLiteral,
   BooleanLiteral,
   ByteLiteral,
@@ -27,6 +30,8 @@ enum class TokenType {
   KeywordReturn,
   KeywordInt,
   KeywordFloat,
+  KeywordBinary,
+  KeywordHex,
   KeywordString,
   KeywordBool,
   KeywordByte,
@@ -100,6 +105,8 @@ const std::unordered_map<std::string, TokenType> keywordMap = {
     // Types
     {"int", TokenType::KeywordInt},
     {"float", TokenType::KeywordFloat},
+    {"binary", TokenType::KeywordBinary},
+    {"hex", TokenType::KeywordHex},
     {"string", TokenType::KeywordString},
     {"bool", TokenType::KeywordBool},
     {"byte", TokenType::KeywordByte},

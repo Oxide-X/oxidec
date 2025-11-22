@@ -84,7 +84,7 @@ Token LexicalAnalyser::scanNumber() {
     lexeme += advance();
     while (std::isxdigit(peek()))
       lexeme += advance();
-    return createToken(TokenType::IntegerLiteral, lexeme, startLine, startCol);
+    return createToken(TokenType::HexLiteral, lexeme, startLine, startCol);
   }
 
   if (peek() == '0' && peek(1) == 'b') {
@@ -92,7 +92,7 @@ Token LexicalAnalyser::scanNumber() {
     lexeme += advance();
     while (peek() == '0' || peek() == '1')
       lexeme += advance();
-    return createToken(TokenType::IntegerLiteral, lexeme, startLine, startCol);
+    return createToken(TokenType::BinaryLiteral, lexeme, startLine, startCol);
   }
 
   while (std::isdigit(peek()))
@@ -331,6 +331,10 @@ std::string token_type_to_string(TokenType type) {
     return "INTEGER_LITERAL";
   case TokenType::FloatLiteral:
     return "FLOAT_LITERAL";
+  case TokenType::BinaryLiteral:
+    return "BINARY_LITERAL";
+  case TokenType::HexLiteral:
+    return "HEX_LITERAL";
   case TokenType::StringLiteral:
     return "STRING_LITERAL";
   case TokenType::BooleanLiteral:
@@ -341,6 +345,10 @@ std::string token_type_to_string(TokenType type) {
     return "KEYWORD_INT";
   case TokenType::KeywordFloat:
     return "KEYWORD_FLOAT";
+  case TokenType::KeywordBinary:
+    return "KEYWORD_BINARY";
+  case TokenType::KeywordHex:
+    return "KEYWORD_HEX";
   case TokenType::KeywordIf:
     return "KEYWORD_IF";
   case TokenType::KeywordElse:

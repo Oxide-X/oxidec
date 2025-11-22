@@ -109,7 +109,6 @@ const std::unordered_map<std::string, TokenType> keywordMap = {
     {"hex", TokenType::KeywordHex},
     {"string", TokenType::KeywordString},
     {"bool", TokenType::KeywordBool},
-    {"byte", TokenType::KeywordByte},
     {"void", TokenType::KeywordVoid},
     {"null", TokenType::KeywordNull},
 

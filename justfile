@@ -1,8 +1,41 @@
-build:
-    cmake --build build
+# Default build type (override: just build type=Release)
+type := Debug
+builddir := build
 
-generate-build:
-    cmake -B build -S .
+# Number of cores
+jobs := `nproc`
+
+default: build
+
+# ---------------------------------------------------------
+
+configure:
+    cmake -S . -B {{builddir}} -DCMAKE_BUILD_TYPE={{type}} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+build: configure
+    cmake --build {{builddir}} --parallel {{jobs}}
+
+rebuild:
+    rm -rf {{builddir}}
+    just build type={{type}}
+
+run: build
+    ./{{builddir}}/oxidec
+
+install: build
+    cmake --install {{builddir}}
 
 clean:
-    rm -rf ./build/*
+    cmake --build {{builddir}} --target clean 2>/dev/null || true
+
+distclean:
+    rm -rf {{builddir}}
+
+release:
+    just build type=Release
+
+debug:
+    just build type=Debug
+
+verbose: configure
+    cmake --build {{builddir}} --verbose

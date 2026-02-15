@@ -11,6 +11,16 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Fetch spdlog
+include(FetchContent)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.17.0
+)
+FetchContent_MakeAvailable(spdlog)
+
+
 # Source files
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 
@@ -33,6 +43,9 @@ target_include_directories(oxidec PRIVATE
     include
     ${CMAKE_CURRENT_BINARY_DIR} # Needed for version.hpp
 )
+
+# Link spdlog
+target_link_libraries(oxidec PRIVATE spdlog::spdlog)
 
 # Compiler warnings
 if(MSVC)

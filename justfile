@@ -1,7 +1,7 @@
 build:
     cmake --build build
 
-enerate-build:
+generate-build:
     cmake -B build -S .
 
 clean:

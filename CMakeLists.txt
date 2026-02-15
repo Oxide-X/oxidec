@@ -6,26 +6,35 @@ project(oxidec
     LANGUAGES CXX
 )
 
-# Specify C++ Standard (C++20 recommended for modern features, change to 17 if needed)
+# Specify C++ Standard
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# GLOB_RECURSE finds all .cpp files in src/ and its subdirectories
-# CONFIGURE_DEPENDS tries to fix the re-run issue (available in CMake 3.12+)
+# Source files
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 
-# Create the executable
+# Generate version header
+# Template file: include/version.hpp.in
+# Contains:
+# #define OXIDEC_VERSION_STRING "@PROJECT_VERSION@"
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/version.hpp.in
+    ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
+    @ONLY
+)
+
+# Create executable
 add_executable(oxidec ${SOURCES})
 
 # Include directories
-# This allows you to use #include "driver/index.hpp" or #include "util/ox.consts.hpp"
 target_include_directories(oxidec PRIVATE
     src
     include
+    ${CMAKE_CURRENT_BINARY_DIR} # Needed for version.hpp
 )
 
-# Enable standard compiler warnings (Good practice)
+# Compiler warnings
 if(MSVC)
     target_compile_options(oxidec PRIVATE /W4)
 else()

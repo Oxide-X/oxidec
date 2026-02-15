@@ -1,8 +1,9 @@
 #include "cstring"
 #include "exception"
 #include "index.hpp"
-#include "iostream";
-#include "util/ox.consts.hpp";
+#include "iostream"
+#include "util/ox.consts.hpp"
+#include "version.hpp"
 
 bool InvocationDriver::compareArgOptionKey(char *arg, std::string shortHand) const {
   return arg == shortHand;
@@ -21,9 +22,8 @@ bool InvocationDriver::isRootFilePath(char *arg) const {
 // TODO:
 void InvocationDriver::displayCompilerVersion() {
   this->argOptions.terminateCompileLoop = true;
-  std::string compilerVersion = "0.0.0";
   std::cout
-      << "oxidec: v" << compilerVersion << std::endl;
+      << "oxidec: v" << OXIDEC_VERSION << std::endl;
 }
 
 InvocationDriver::InvocationDriver(int argc, char *argv[]) {

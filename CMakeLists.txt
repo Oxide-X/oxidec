@@ -11,8 +11,18 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Fetch spdlog
+
 include(FetchContent)
+
+# Fetch CLI11
+FetchContent_Declare(
+  cli11
+  GIT_REPOSITORY https://github.com/CLIUtils/CLI11
+  GIT_TAG v2.6.1
+)
+FetchContent_MakeAvailable(cli11)
+
+# Fetch spdlog
 FetchContent_Declare(
     spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog.git
@@ -45,7 +55,10 @@ target_include_directories(oxidec PRIVATE
 )
 
 # Link spdlog
-target_link_libraries(oxidec PRIVATE spdlog::spdlog)
+target_link_libraries(oxidec PRIVATE 
+    CLI11::CLI11
+    spdlog::spdlog
+)
 
 # Compiler warnings
 if(MSVC)

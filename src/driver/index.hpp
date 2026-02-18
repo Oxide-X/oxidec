@@ -1,25 +1,35 @@
 #pragma once
 
+#include <CLI/CLI.hpp>
 #include <string>
 
-struct argOptions {
-  std::string rootFilePath;
-  std::string outputPath = "build/oxide.out";
-  bool terminateCompileLoop = false;
+// Plain Data Object to hold compiler state
+struct CompilerOptions {
+  std::string baseFile;
+  std::string buildFile = "main.out";
   bool printAllWarnings = false;
   bool verboseLogs = false;
   bool dumpIR = false;
 };
 
 class InvocationDriver {
-private:
-  struct argOptions argOptions;
-  bool compareArgOptionKey(char *arg, std::string shortHand) const;
-  bool compareArgOptionKey(char *arg, std::string shortHand, std::string longHand) const;
-  bool isRootFilePath(char *arg) const;
-  void displayCompilerVersion();
-  void displayCompilerOptions();
-
 public:
-  InvocationDriver(int argc, char *argv[]);
+  // Singleton-like access
+  static InvocationDriver *init(int argc, char *argv[]);
+  static InvocationDriver *getInstance();
+
+  // The core logic
+  void parse(int argc, char *argv[]);
+
+  // Getters for the rest of the compiler to use
+  const CompilerOptions &getOptions() const { return options; }
+
+private:
+  InvocationDriver(); // Private constructor for singleton use
+  static InvocationDriver *instance;
+
+  CLI::App app{"oxidec: A modern high-performance compiler"};
+  CompilerOptions options;
+
+  void setupArguments();
 };

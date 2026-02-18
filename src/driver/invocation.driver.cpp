@@ -30,8 +30,10 @@ void InvocationDriver::setupArguments() {
 
 void InvocationDriver::parse(int argc, char *argv[]) {
   try {
-    app.parse(argc, argv);
+    char **utf8argv = app.ensure_utf8(argv);
+    app.parse(argc, utf8argv);
 
+    spdlog::set_pattern("[%H:%M:%S] [%l] [tid: %t] : %v");
     // Apply logging level immediately based on flags
     if (options.verboseLogs) {
       spdlog::set_level(spdlog::level::debug);

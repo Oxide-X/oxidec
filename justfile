@@ -7,7 +7,7 @@ builddir := "build"
 
 jobs := `nproc`
 
-default: build
+default: run
 
 # ---------------------------------------------------------
 
@@ -22,7 +22,7 @@ rebuild:
     just build type={{ type }}
 
 run: build
-    ./{{ builddir }}/oxidec
+    ./{{ builddir }}/oxidec -v examples/main.ox
 
 install: build
     cmake --install {{ builddir }}
